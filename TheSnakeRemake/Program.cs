@@ -4,7 +4,8 @@
     {
         static void Main()
         {
-            
+            ISnakeGame game = new SnakeGame();
+            game.RunGame();
         }
     }
 }
