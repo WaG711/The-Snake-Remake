@@ -13,7 +13,7 @@
 
             Head = new Pixel(initialX, initialY, HeadColor);
 
-            for (int i = 1; i < 1; i++)
+            for (int i = 1; i < 2; i++)
             {
                 int bodySegmentX = Head.X - i;
                 Body.Enqueue(new Pixel(bodySegmentX, initialY, BodyColor));
@@ -37,7 +37,7 @@
             Head = new Pixel(initialX, initialY, HeadColor);
             Body.Clear();
 
-            for (int i = 1; i <= 1; i++)
+            for (int i = 1; i < 2; i++)
             {
                 int bodySegmentX = Head.X - i;
                 Body.Enqueue(new Pixel(bodySegmentX, initialY, BodyColor));

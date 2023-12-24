@@ -32,7 +32,7 @@
             IsMaxScore = false;
         }
 
-        public Pixel SpawnFood(Snake snake)
+        public Pixel SpawnFood(ISnake snake)
         {
             Pixel food = new Pixel(0, 0, _foodColor);
             bool foodSpawn = false;
