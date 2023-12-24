@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TheSnakeRemake
+﻿namespace TheSnakeRemake
 {
     public class Snake : ISnake
     {
