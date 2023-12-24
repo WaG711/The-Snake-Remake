@@ -5,8 +5,8 @@
         private int _selectedSpeed;
         private bool _selectedMode;
 
-        public int Speed { get; set; }
         public bool Mode { get; set; }
+        public int Speed { get; set; }
 
         public void Reset()
         {
