@@ -16,7 +16,6 @@ namespace TheSnakeRemake
         private IPixel _food;
         private Direction _currentMove;
         private int _lagMs = 0;
-        private bool _isMenu = true;
 
         public SnakeGame()
         {
@@ -35,11 +34,12 @@ namespace TheSnakeRemake
 
             while (true)
             {
-                if (_isMenu)
+                if (_consoleUI.Menu)
                 {
                     _consoleUI.SetMode();
                     _consoleUI.SetSpeed();
                 }
+
                 ProcessFrame();
                 Thread.Sleep(100);
 
@@ -78,7 +78,7 @@ namespace TheSnakeRemake
             }
 
             _consoleGUI.DisplayEnd();
-            _consoleUI.SetMenu(ref _isMenu);
+            _consoleUI.SetMenu();
         }
 
         private void UpdateMove(Direction oldMove)
@@ -118,10 +118,10 @@ namespace TheSnakeRemake
 
             if (_consoleGUI.Score % 5 == 0)
             {
-                _consoleUI.Speed -= 1;
+                _consoleUI.ReductionSpeed();
             }
 
-            _consoleGUI.Score++;
+            _consoleGUI.AddScore();
             Task.Run(() => Console.Beep(1200, 200));
         }
 

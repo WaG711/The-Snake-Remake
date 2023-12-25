@@ -1,30 +1,37 @@
 ﻿namespace TheSnakeRemake
 {
-    public struct ConsoleUI : IConsoleUI
+    public class ConsoleUI : IConsoleUI
     {
         private int _selectedSpeed;
         private bool _selectedMode;
 
-        public int Speed { get; set; }
-        public bool Mode { get; set; }
+        public bool Menu { get; private set; } = true;
+        public int Speed { get; private set; }
+        public bool Mode { get; private set; }
 
         public void Reset()
         {
             Mode = _selectedMode;
             Speed = _selectedSpeed;
         }
-        public bool SetMenu(ref bool isMenu)
+
+        public void ReductionSpeed()
+        {
+            Speed--;
+        }
+
+        public bool SetMenu()
         {
             Console.SetCursorPosition(10, 7);
             Console.WriteLine("Введите 1 для выхода в меню или нажмите ENTER для перезапуска");
             Console.SetCursorPosition(38, 9);
             string? userInput = Console.ReadLine();
-            isMenu = userInput switch
+            Menu = userInput switch
             {
                 "1" => true,
                 _ => false,
             };
-            return isMenu;
+            return Menu;
         }
 
         public bool SetMode()

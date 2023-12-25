@@ -32,23 +32,26 @@
         public int MapHeight { get; }
         public int ScreenWidth { get; }
         public int ScreenHeight { get; }
-        public int Score { get; set; }
-        public bool IsMaxScore { get; set; }
+        public int Score { get; }
+        public bool IsMaxScore { get; }
         void DisplayScore();
         void DisplayEnd();
         void DrawBorder();
         Pixel SpawnFood(ISnake snake);
         bool CheckScore();
+        void AddScore();
         void Reset();
     }
 
     public interface IConsoleUI
     {
-        public bool Mode { get; set; }
-        public int Speed { get; set; }
-        bool SetMenu(ref bool isMenu);
+        public bool Menu {  get; }
+        public bool Mode { get; }
+        public int Speed { get; }
+        bool SetMenu();
         bool SetMode();
         int SetSpeed();
+        void ReductionSpeed();
         void Reset();
     }
 

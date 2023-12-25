@@ -1,6 +1,6 @@
 ﻿namespace TheSnakeRemake
 {
-    public struct ConsoleGUI : IConsoleGUI
+    public class ConsoleGUI : IConsoleGUI
     {
         private readonly int _maxScore = 500;
         private readonly int _mapWidth;
@@ -20,13 +20,17 @@
             _consoleUI = new ConsoleUI();
         }
 
-        public readonly int MapWidth { get { return _mapWidth; } }
-        public readonly int MapHeight { get { return _mapHeight; } }
-        public readonly int ScreenWidth { get { return _mapWidth * 3; } }
-        public readonly int ScreenHeight { get { return _mapHeight * 3; } }
-        public int Score { get; set; } = 0;
-        public bool IsMaxScore { get; set; } = false;
+        public int MapWidth { get => _mapWidth; }
+        public int MapHeight { get => _mapHeight; }
+        public int ScreenWidth { get => _mapWidth * 3; }
+        public int ScreenHeight { get => _mapHeight * 3; }
+        public int Score { get; private set; } = 0;
+        public bool IsMaxScore { get; private set; } = false;
 
+        public void AddScore()
+        {
+            Score++;
+        }
         public void Reset()
         {
             Score = 0;
