@@ -12,7 +12,6 @@ namespace TheSnakeRemake
         private readonly IConsoleUI _consoleUI;
         private readonly ISnakeMove _snakeMove;
         private readonly Snake _snake;
-        private readonly int _maxScore = 500;
         private readonly IConsoleGUI _consoleGUI;
         private IPixel _food;
         private Direction _currentMove;
@@ -52,38 +51,32 @@ namespace TheSnakeRemake
         {
             Console.Clear();
             ProcessWall();
-            while (true)
+
+            while (!(CheckCollision() || _consoleGUI.CheckScore()))
             {
                 _stopwatch.Restart();
                 Direction oldMove = _currentMove;
+
                 while (_stopwatch.ElapsedMilliseconds <= _consoleUI.Speed - _lagMs)
                 {
                     UpdateMove(oldMove);
                 }
+
                 _stopwatch.Restart();
 
                 if (_snake.Head.X == _food.X && _snake.Head.Y == _food.Y)
                 {
                     HandleFoodEaten();
-
-                    if (_consoleGUI.Score >= _maxScore)
-                    {
-                        _consoleGUI.IsMaxScore = true;
-                        break;
-                    }
                 }
                 else
                 {
                     _snake.PerformMovement(_currentMove);
                 }
 
-                if (CheckCollision())
-                {
-                    break;
-                }
                 _lagMs = (int)_stopwatch.ElapsedMilliseconds;
                 _consoleGUI.DisplayScore();
             }
+
             _consoleGUI.DisplayEnd();
             _consoleUI.SetMenu(ref _isMenu);
         }

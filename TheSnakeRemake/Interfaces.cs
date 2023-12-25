@@ -38,6 +38,7 @@
         void DisplayEnd();
         void DrawBorder();
         Pixel SpawnFood(ISnake snake);
+        bool CheckScore();
         void Reset();
     }
 

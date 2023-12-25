@@ -2,6 +2,7 @@
 {
     public struct ConsoleGUI : IConsoleGUI
     {
+        private readonly int _maxScore = 500;
         private readonly int _mapWidth;
         private readonly int _mapHeight;
         private readonly ConsoleColor _color;
@@ -30,6 +31,16 @@
         {
             Score = 0;
             IsMaxScore = false;
+        }
+
+        public bool CheckScore()
+        {
+            if (Score >= _maxScore)
+            {
+                IsMaxScore = false;
+                return true;
+            }
+            return false;
         }
 
         public Pixel SpawnFood(ISnake snake)
