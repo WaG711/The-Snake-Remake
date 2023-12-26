@@ -55,11 +55,11 @@ namespace TheSnakeRemake
         private void ProcessFrame()
         {
             Console.Clear();
+            _consoleGUI.DrawBorder();
             _food.Draw();
 
             while (!(CheckCollision() || _consoleGUI.CheckScore()))
             {
-                _consoleGUI.DrawBorder();
                 _stopwatch.Restart();
                 Direction oldMove = _currentMove;
 
