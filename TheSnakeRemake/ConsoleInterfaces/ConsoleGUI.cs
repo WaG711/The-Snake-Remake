@@ -39,7 +39,7 @@
         {
             if (Score >= _maxScore)
             {
-                IsMaxScore = false;
+                IsMaxScore = true;
                 return true;
             }
             return false;
@@ -84,8 +84,10 @@
 
             if (IsMaxScore)
             {
-                Console.SetCursorPosition(33, 3);
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.SetCursorPosition(35, 3);
                 Console.WriteLine("YOU WON");
+                Console.ResetColor();
             }
 
             Console.SetCursorPosition(33, 5);
