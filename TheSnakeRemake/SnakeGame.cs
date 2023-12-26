@@ -6,38 +6,43 @@ namespace TheSnakeRemake
     {
         private readonly ConsoleColor _headColor = ConsoleColor.Blue;
         private readonly ConsoleColor _bodyColor = ConsoleColor.DarkBlue;
-        private readonly int _startX = 10;
+        private readonly int _startX = 4;
         private readonly int _startY = 5;
         private readonly Stopwatch _stopwatch;
-        private readonly IConsoleUI _consoleUI;
         private readonly ISnakeMove _snakeMove;
+        private readonly IFoodSpawn _foodSpawn;
         private readonly Snake _snake;
         private readonly IConsoleGUI _consoleGUI;
+        private readonly IConsoleUI _consoleUI;
         private IPixel _food;
         private Direction _currentMove;
         private int _lagMs = 0;
+        private readonly IGameSettings _gameSettings;
 
         public SnakeGame()
         {
             _stopwatch = new Stopwatch();
-            _consoleUI = new ConsoleUI();
-            _consoleGUI = new ConsoleGUI();
+            _gameSettings = new GameSettings();
+            _consoleUI = new ConsoleUI(_gameSettings);
+            _consoleGUI = new ConsoleGUI(_gameSettings);
+            _foodSpawn = new FoodSpawn(_gameSettings);
 
             _currentMove = Direction.Right;
             _snake = new Snake(_startX, _startY, _headColor, _bodyColor);
             _snakeMove = new SnakeMove(_snake);
-            _food = _consoleGUI.SpawnFood(_snake);
+            _food = _foodSpawn.SpawnFood(_snake);
         }
+
         public void RunGame()
         {
             Console.CursorVisible = false;
 
             while (true)
             {
-                if (_consoleUI.Menu)
+                if (_gameSettings.Menu)
                 {
-                    _consoleUI.SetMode();
-                    _consoleUI.SetSpeed();
+                    _consoleUI.ChooseMode();
+                    _consoleUI.ChooseSpeed();
                 }
 
                 ProcessFrame();
@@ -50,14 +55,15 @@ namespace TheSnakeRemake
         private void ProcessFrame()
         {
             Console.Clear();
-            ProcessWall();
+            _food.Draw();
 
             while (!(CheckCollision() || _consoleGUI.CheckScore()))
             {
+                _consoleGUI.DrawBorder();
                 _stopwatch.Restart();
                 Direction oldMove = _currentMove;
 
-                while (_stopwatch.ElapsedMilliseconds <= _consoleUI.Speed - _lagMs)
+                while (_stopwatch.ElapsedMilliseconds <= _gameSettings.Speed - _lagMs)
                 {
                     UpdateMove(oldMove);
                 }
@@ -78,7 +84,7 @@ namespace TheSnakeRemake
             }
 
             _consoleGUI.DisplayEnd();
-            _consoleUI.SetMenu();
+            _consoleUI.ChooseMenu();
         }
 
         private void UpdateMove(Direction oldMove)
@@ -89,36 +95,15 @@ namespace TheSnakeRemake
             }
         }
 
-        public void ProcessWall()
-        {
-            if (_consoleUI.Mode)
-            {
-                _consoleGUI.DrawBorder();
-                _food.Draw();
-            }
-            else
-            {
-                _food.Draw(_consoleGUI.MapWidth, _consoleGUI.MapHeight);
-            }
-        }
-
         private void HandleFoodEaten()
         {
             _snake.PerformMovement(_currentMove, true);
-            _food = _consoleGUI.SpawnFood(_snake);
-
-            if (_consoleUI.Mode)
-            {
-                _food.Draw();
-            }
-            else
-            {
-                _food.Draw(_consoleGUI.MapWidth, _consoleGUI.MapHeight);
-            }
+            _food = _foodSpawn.SpawnFood(_snake);
+            _food.Draw();
 
             if (_consoleGUI.Score % 5 == 0)
             {
-                _consoleUI.ReductionSpeed();
+                _gameSettings.ReductionSpeed();
             }
 
             _consoleGUI.AddScore();
@@ -127,11 +112,11 @@ namespace TheSnakeRemake
 
         private bool CheckCollision()
         {
-            if (_consoleUI.Mode)
+            if (_gameSettings.Mode)
             {
-                return _snake.Head.X == _consoleGUI.MapWidth - 1
+                return _snake.Head.X == _gameSettings.MapWidth
                     || _snake.Head.X == 0
-                    || _snake.Head.Y == _consoleGUI.MapHeight - 1
+                    || _snake.Head.Y == _gameSettings.MapHeight
                     || _snake.Head.Y == 0
                     || _snake.Body.Any(b => b.X == _snake.Head.X && b.Y == _snake.Head.Y);
             }
@@ -145,10 +130,9 @@ namespace TheSnakeRemake
         {
             _currentMove = Direction.Right;
             _snake.Reset(_startX, _startY, _headColor, _bodyColor);
-            _food = _consoleGUI.SpawnFood(_snake);
+            _food = _foodSpawn.SpawnFood(_snake);
             _lagMs = 0;
             _consoleGUI.Reset();
-            _consoleUI.Reset();
         }
     }
 }

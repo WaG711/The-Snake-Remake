@@ -3,8 +3,6 @@
     public class Snake : ISnake
     {
         private readonly ISnakeMove _snakeMove;
-        private readonly IConsoleUI _consoleUI;
-        private readonly IConsoleGUI _consoleGUI;
 
         public Snake(int initialX, int initialY, ConsoleColor headColor, ConsoleColor bodyColor)
         {
@@ -20,8 +18,6 @@
             }
 
             _snakeMove = new SnakeMove(this);
-            _consoleGUI = new ConsoleGUI();
-            _consoleUI = new ConsoleUI();
         }
 
         public Pixel Head { get; set; }
@@ -46,25 +42,21 @@
 
         public void Clear()
         {
-            int screenWidth = _consoleUI.Mode ? 0 : _consoleGUI.MapWidth;
-            int screenHeight = _consoleUI.Mode ? 0 : _consoleGUI.MapHeight;
+            Head.Clear();
 
-            Head.Clear(screenWidth, screenHeight);
             foreach (Pixel pixel in Body)
             {
-                pixel.Clear(screenWidth, screenHeight);
+                pixel.Clear();
             }
         }
 
         public void Draw()
         {
-            int screenWidth = _consoleUI.Mode ? 0 : _consoleGUI.MapWidth;
-            int screenHeight = _consoleUI.Mode ? 0 : _consoleGUI.MapHeight;
+            Head.Draw();
 
-            Head.Draw(screenWidth, screenHeight);
             foreach (Pixel pixel in Body)
             {
-                pixel.Draw(screenWidth, screenHeight);
+                pixel.Draw();
             }
         }
 

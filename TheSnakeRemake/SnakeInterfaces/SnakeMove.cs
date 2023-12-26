@@ -11,12 +11,12 @@
     public class SnakeMove : ISnakeMove
     {
         private readonly Snake _snake;
-        private readonly IConsoleUI _consoleUI;
+        private readonly IGameSettings _gameSettings;
 
         public SnakeMove(Snake snake)
         {
             _snake = snake;
-            _consoleUI = new ConsoleUI();
+            _gameSettings = new GameSettings();
         }
 
         public void MoveSnake(Direction direction, bool isEat)
@@ -30,7 +30,7 @@
                 _snake.Body.Dequeue();
             }
 
-            if (_consoleUI.Mode)
+            if (_gameSettings.Mode)
             {
                 switch (direction)
                 {

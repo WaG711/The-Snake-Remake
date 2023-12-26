@@ -5,9 +5,7 @@
         public int X { get; }
         public int Y { get; }
         void Draw();
-        void Draw(int screenWidth, int screenHeight);
         void Clear();
-        void Clear(int screenWidth, int screenHeight);
     }
 
     public interface ISnake
@@ -26,16 +24,31 @@
         Direction ReadMove(Direction currentDirection);
     }
 
-    public interface IConsoleGUI
+    public interface IFoodSpawn
+    {
+        Pixel SpawnFood(ISnake snake);
+    }
+
+    public interface IGameSettings
     {
         public int MapWidth { get; }
         public int MapHeight { get; }
+        public bool Menu { get; }
+        public bool Mode { get; }
+        public int Speed { get; }
+        bool SetMenu(string? userInput);
+        bool SetMode(string? userInput);
+        int SetSpeed(string? userInput);
+        void ReductionSpeed();
+    }
+
+    public interface IConsoleGUI
+    {
         public int Score { get; }
         public bool IsMaxScore { get; }
         void DisplayScore();
         void DisplayEnd();
         void DrawBorder();
-        Pixel SpawnFood(ISnake snake);
         bool CheckScore();
         void AddScore();
         void Reset();
@@ -43,14 +56,9 @@
 
     public interface IConsoleUI
     {
-        public bool Menu {  get; }
-        public bool Mode { get; }
-        public int Speed { get; }
-        bool SetMenu();
-        bool SetMode();
-        int SetSpeed();
-        void ReductionSpeed();
-        void Reset();
+        void ChooseMenu();
+        void ChooseMode();
+        void ChooseSpeed();
     }
 
     public interface ISnakeGame

@@ -2,39 +2,23 @@
 {
     public class ConsoleUI : IConsoleUI
     {
-        private int _selectedSpeed;
-        private bool _selectedMode;
+        private readonly IGameSettings _gameSettings;
 
-        public bool Menu { get; private set; } = true;
-        public int Speed { get; private set; }
-        public bool Mode { get; private set; }
-
-        public void Reset()
+        public ConsoleUI(IGameSettings gameSettings)
         {
-            Mode = _selectedMode;
-            Speed = _selectedSpeed;
+            _gameSettings = gameSettings;
         }
 
-        public void ReductionSpeed()
-        {
-            Speed--;
-        }
-
-        public bool SetMenu()
+        public void ChooseMenu()
         {
             Console.SetCursorPosition(10, 7);
             Console.WriteLine("Введите 1 для выхода в меню или нажмите ENTER для перезапуска");
             Console.SetCursorPosition(38, 9);
             string? userInput = Console.ReadLine();
-            Menu = userInput switch
-            {
-                "1" => true,
-                _ => false,
-            };
-            return Menu;
+            _gameSettings.SetMenu(userInput);
         }
 
-        public bool SetMode()
+        public void ChooseMode()
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.White;
@@ -44,17 +28,10 @@
             Console.WriteLine("Введите 0 для игры без смертельных стен");
             Console.SetCursorPosition(31, 9);
             string? userInput = Console.ReadLine();
-            Mode = userInput switch
-            {
-                "0" => false,
-                "1" => true,
-                _ => true,
-            };
-            _selectedMode = Mode;
-            return Mode;
+            _gameSettings.SetMode(userInput);
         }
 
-        public int SetSpeed()
+        public void ChooseSpeed()
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.White;
@@ -66,15 +43,7 @@
             Console.WriteLine("Введите 2 для быстрого режима");
             Console.SetCursorPosition(22, 11);
             string? userInput = Console.ReadLine();
-            Speed = userInput switch
-            {
-                "0" => 190,
-                "1" => 140,
-                "2" => 92,
-                _ => 140,
-            };
-            _selectedSpeed = Speed;
-            return Speed;
+            _gameSettings.SetSpeed(userInput);
         }
     }
 }

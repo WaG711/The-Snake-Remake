@@ -2,33 +2,22 @@
 {
     public class ConsoleGUI : IConsoleGUI
     {
+        private readonly IGameSettings _gameSettings;
         private readonly int _maxScore = 500;
-        private readonly int _mapWidth;
-        private readonly int _mapHeight;
-        private readonly ConsoleColor _color;
-        private readonly ConsoleColor _foodColor;
-        private readonly Random _random;
-        private readonly IConsoleUI _consoleUI;
 
-        public ConsoleGUI()
+        public ConsoleGUI(IGameSettings gameSettings)
         {
-            _mapWidth = 30;
-            _mapHeight = 20;
-            _color = ConsoleColor.White;
-            _foodColor = ConsoleColor.DarkGreen;
-            _random = new Random();
-            _consoleUI = new ConsoleUI();
+            _gameSettings = gameSettings;
         }
 
-        public int MapWidth { get => _mapWidth; }
-        public int MapHeight { get => _mapHeight; }
-        public int Score { get; private set; } = 0;
-        public bool IsMaxScore { get; private set; } = false;
+        public int Score { get; private set; }
+        public bool IsMaxScore { get; private set; }
 
         public void AddScore()
         {
             Score++;
         }
+
         public void Reset()
         {
             Score = 0;
@@ -45,34 +34,10 @@
             return false;
         }
 
-        public Pixel SpawnFood(ISnake snake)
-        {
-            Pixel food = new Pixel(0, 0, _foodColor);
-            bool foodSpawn = false;
-
-            while (!foodSpawn)
-            {
-                int foodX = _random.Next(1, _mapWidth - 1);
-                int foodY = _random.Next(1, _mapHeight - 1);
-
-                if (!snake.Body.Any(b => b.X == foodX && b.Y == foodY))
-                {
-                    if ((foodX != snake.Head.X || foodY != snake.Head.Y)
-                        && !(foodX <= 0 || foodX >= _mapWidth - 1 || foodY <= 0 || foodY >= _mapHeight - 1))
-                    {
-                        food = new Pixel(foodX, foodY, _foodColor);
-                        foodSpawn = true;
-                    }
-                }
-            }
-
-            return food;
-        }
-
         public void DisplayScore()
         {
-            Console.ForegroundColor = _consoleUI.Mode ? ConsoleColor.Black : ConsoleColor.White;
-            Console.BackgroundColor = _consoleUI.Mode ? _color : ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.BackgroundColor = ConsoleColor.Black;
             Console.SetCursorPosition(33, 0);
             Console.WriteLine($"Score - {Score}");
             Console.ResetColor();
@@ -99,28 +64,30 @@
 
         public void DrawBorder()
         {
-            for (int i = 0; i < _mapWidth; i++)
+            for (int i = 0; i <= _gameSettings.MapWidth; i++)
             {
                 DrawPixel(i, 0);
-                DrawPixel(i, _mapHeight - 1);
+                DrawPixel(i, _gameSettings.MapHeight);
             }
 
-            for (int i = 0; i < _mapHeight; i++)
+            for (int i = 0; i <= _gameSettings.MapHeight; i++)
             {
                 DrawPixel(0, i);
-                DrawPixel(_mapWidth - 1, i);
+                DrawPixel(_gameSettings.MapWidth, i);
             }
         }
 
         private void DrawPixel(int x, int y)
         {
-            if (_consoleUI.Mode)
+            if (_gameSettings.Mode)
             {
-                new Pixel(x, y, _color).Draw();
+                new Pixel(x, y, ConsoleColor.White).Draw();
+                return;
             }
-            else
+
+            if (x == _gameSettings.MapWidth || y == _gameSettings.MapHeight)
             {
-                new Pixel(x, y, _color).Draw(MapWidth, MapHeight);
+                new Pixel(x, y, ConsoleColor.DarkGreen).Draw();
             }
         }
     }
