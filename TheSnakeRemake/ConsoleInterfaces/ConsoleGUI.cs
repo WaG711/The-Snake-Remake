@@ -22,8 +22,6 @@
 
         public int MapWidth { get => _mapWidth; }
         public int MapHeight { get => _mapHeight; }
-        public int ScreenWidth { get => _mapWidth * 3; }
-        public int ScreenHeight { get => _mapHeight * 3; }
         public int Score { get; private set; } = 0;
         public bool IsMaxScore { get; private set; } = false;
 
@@ -120,7 +118,7 @@
             }
             else
             {
-                new Pixel(x, y, _color).Draw(ScreenWidth, ScreenHeight);
+                new Pixel(x, y, _color).Draw(MapWidth, MapHeight);
             }
         }
     }

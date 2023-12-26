@@ -98,7 +98,7 @@ namespace TheSnakeRemake
             }
             else
             {
-                _food.Draw(_consoleGUI.ScreenWidth, _consoleGUI.ScreenHeight);
+                _food.Draw(_consoleGUI.MapWidth, _consoleGUI.MapHeight);
             }
         }
 
@@ -113,7 +113,7 @@ namespace TheSnakeRemake
             }
             else
             {
-                _food.Draw(_consoleGUI.ScreenWidth, _consoleGUI.ScreenHeight);
+                _food.Draw(_consoleGUI.MapWidth, _consoleGUI.MapHeight);
             }
 
             if (_consoleGUI.Score % 5 == 0)

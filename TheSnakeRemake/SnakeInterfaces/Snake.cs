@@ -46,8 +46,8 @@
 
         public void Clear()
         {
-            int screenWidth = _consoleUI.Mode ? 0 : _consoleGUI.ScreenWidth;
-            int screenHeight = _consoleUI.Mode ? 0 : _consoleGUI.ScreenHeight;
+            int screenWidth = _consoleUI.Mode ? 0 : _consoleGUI.MapWidth;
+            int screenHeight = _consoleUI.Mode ? 0 : _consoleGUI.MapHeight;
 
             Head.Clear(screenWidth, screenHeight);
             foreach (Pixel pixel in Body)
@@ -58,8 +58,8 @@
 
         public void Draw()
         {
-            int screenWidth = _consoleUI.Mode ? 0 : _consoleGUI.ScreenWidth;
-            int screenHeight = _consoleUI.Mode ? 0 : _consoleGUI.ScreenHeight;
+            int screenWidth = _consoleUI.Mode ? 0 : _consoleGUI.MapWidth;
+            int screenHeight = _consoleUI.Mode ? 0 : _consoleGUI.MapHeight;
 
             Head.Draw(screenWidth, screenHeight);
             foreach (Pixel pixel in Body)

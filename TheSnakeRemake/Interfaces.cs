@@ -30,8 +30,6 @@
     {
         public int MapWidth { get; }
         public int MapHeight { get; }
-        public int ScreenWidth { get; }
-        public int ScreenHeight { get; }
         public int Score { get; }
         public bool IsMaxScore { get; }
         void DisplayScore();
