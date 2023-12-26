@@ -4,7 +4,7 @@
     {
         private readonly ISnakeMove _snakeMove;
 
-        public Snake(int initialX, int initialY, ConsoleColor headColor, ConsoleColor bodyColor)
+        public Snake(int initialX, int initialY, ConsoleColor headColor, ConsoleColor bodyColor, IGameSettings gameSettings)
         {
             HeadColor = headColor;
             BodyColor = bodyColor;
@@ -17,7 +17,7 @@
                 Body.Enqueue(new Pixel(bodySegmentX, initialY, BodyColor));
             }
 
-            _snakeMove = new SnakeMove(this);
+            _snakeMove = new SnakeMove(this, gameSettings);
         }
 
         public Pixel Head { get; set; }

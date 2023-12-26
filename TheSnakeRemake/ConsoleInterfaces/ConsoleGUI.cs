@@ -38,7 +38,7 @@
         {
             Console.ForegroundColor = ConsoleColor.White;
             Console.BackgroundColor = ConsoleColor.Black;
-            Console.SetCursorPosition(33, 0);
+            Console.SetCursorPosition(33, 1);
             Console.WriteLine($"Score - {Score}");
             Console.ResetColor();
         }

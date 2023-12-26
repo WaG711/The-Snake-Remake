@@ -13,10 +13,10 @@
         private readonly Snake _snake;
         private readonly IGameSettings _gameSettings;
 
-        public SnakeMove(Snake snake)
+        public SnakeMove(Snake snake, IGameSettings gameSettings)
         {
             _snake = snake;
-            _gameSettings = new GameSettings();
+            _gameSettings = gameSettings;
         }
 
         public void MoveSnake(Direction direction, bool isEat)
@@ -30,44 +30,22 @@
                 _snake.Body.Dequeue();
             }
 
-            if (_gameSettings.Mode)
+            switch (direction)
             {
-                switch (direction)
-                {
-                    case Direction.Right:
-                        _snake.Head = new Pixel(_snake.Head.X + 1, _snake.Head.Y, _snake.HeadColor);
-                        break;
-                    case Direction.Left:
-                        _snake.Head = new Pixel(_snake.Head.X - 1, _snake.Head.Y, _snake.HeadColor);
-                        break;
-                    case Direction.Up:
-                        _snake.Head = new Pixel(_snake.Head.X, _snake.Head.Y - 1, _snake.HeadColor);
-                        break;
-                    case Direction.Down:
-                        _snake.Head = new Pixel(_snake.Head.X, _snake.Head.Y + 1, _snake.HeadColor);
-                        break;
-                    default:
-                        break;
-                }
-            }
-            else
-            {
-                switch (direction)
-                {
-                    case Direction.Right:
-                        _snake.Head = new Pixel((_snake.Head.X + 1) % 30, _snake.Head.Y, _snake.HeadColor);
-                        break;
-                    case Direction.Left:
-                        _snake.Head = new Pixel((_snake.Head.X - 1 + 30) % 30, _snake.Head.Y, _snake.HeadColor);
-                        break;
-                    case Direction.Up:
-                        _snake.Head = new Pixel(_snake.Head.X, (_snake.Head.Y - 1 + 20) % 20, _snake.HeadColor);
-                        break;
-                    case Direction.Down:
-                        _snake.Head = new Pixel(_snake.Head.X, (_snake.Head.Y + 1) % 20, _snake.HeadColor);
-                        break;
-                    default: break;
-                }
+                case Direction.Right:
+                    _snake.Head = new Pixel((_snake.Head.X + 1) % _gameSettings.MapWidth, _snake.Head.Y, _snake.HeadColor);
+                    break;
+                case Direction.Left:
+                    _snake.Head = new Pixel((_snake.Head.X - 1 + _gameSettings.MapWidth) % _gameSettings.MapWidth, _snake.Head.Y, _snake.HeadColor);
+                    break;
+                case Direction.Up:
+                    _snake.Head = new Pixel(_snake.Head.X, (_snake.Head.Y - 1 + _gameSettings.MapHeight) % _gameSettings.MapHeight, _snake.HeadColor);
+                    break;
+                case Direction.Down:
+                    _snake.Head = new Pixel(_snake.Head.X, (_snake.Head.Y + 1) % _gameSettings.MapHeight, _snake.HeadColor);
+                    break;
+                default:
+                    break;
             }
 
             _snake.Draw();

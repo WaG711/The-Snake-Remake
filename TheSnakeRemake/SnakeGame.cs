@@ -28,8 +28,8 @@ namespace TheSnakeRemake
             _foodSpawn = new FoodSpawn(_gameSettings);
 
             _currentMove = Direction.Right;
-            _snake = new Snake(_startX, _startY, _headColor, _bodyColor);
-            _snakeMove = new SnakeMove(_snake);
+            _snake = new Snake(_startX, _startY, _headColor, _bodyColor, _gameSettings);
+            _snakeMove = new SnakeMove(_snake, _gameSettings);
             _food = _foodSpawn.SpawnFood(_snake);
         }
 
