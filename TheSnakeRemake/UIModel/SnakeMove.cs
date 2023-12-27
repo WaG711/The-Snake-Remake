@@ -1,4 +1,6 @@
-﻿namespace TheSnakeRemake
+﻿using TheSnakeRemake.Model;
+
+namespace TheSnakeRemake.UIModel
 {
     public enum Direction
     {
@@ -10,13 +12,17 @@
 
     public class SnakeMove : ISnakeMove
     {
-        private readonly Snake _snake;
+        private readonly int _mapWidth;
+        private readonly int _mapHeight;
+        private readonly ISnake _snake;
         private readonly IGameSettings _gameSettings;
 
-        public SnakeMove(Snake snake, IGameSettings gameSettings)
+        public SnakeMove(ISnake snake, IGameSettings gameSettings)
         {
             _snake = snake;
             _gameSettings = gameSettings;
+            _mapWidth = _gameSettings.MapWidth;
+            _mapHeight = _gameSettings.MapHeight;
         }
 
         public void MoveSnake(Direction direction, bool isEat)
@@ -33,16 +39,16 @@
             switch (direction)
             {
                 case Direction.Right:
-                    _snake.Head = new Pixel((_snake.Head.X + 1) % _gameSettings.MapWidth, _snake.Head.Y, _snake.HeadColor);
+                    _snake.Head = new Pixel((_snake.Head.X + 1) % _mapWidth, _snake.Head.Y, _snake.HeadColor);
                     break;
                 case Direction.Left:
-                    _snake.Head = new Pixel((_snake.Head.X - 1 + _gameSettings.MapWidth) % _gameSettings.MapWidth, _snake.Head.Y, _snake.HeadColor);
+                    _snake.Head = new Pixel((_snake.Head.X - 1 + _mapWidth) % _mapWidth, _snake.Head.Y, _snake.HeadColor);
                     break;
                 case Direction.Up:
-                    _snake.Head = new Pixel(_snake.Head.X, (_snake.Head.Y - 1 + _gameSettings.MapHeight) % _gameSettings.MapHeight, _snake.HeadColor);
+                    _snake.Head = new Pixel(_snake.Head.X, (_snake.Head.Y - 1 + _mapHeight) % _mapHeight, _snake.HeadColor);
                     break;
                 case Direction.Down:
-                    _snake.Head = new Pixel(_snake.Head.X, (_snake.Head.Y + 1) % _gameSettings.MapHeight, _snake.HeadColor);
+                    _snake.Head = new Pixel(_snake.Head.X, (_snake.Head.Y + 1) % _mapHeight, _snake.HeadColor);
                     break;
                 default:
                     break;

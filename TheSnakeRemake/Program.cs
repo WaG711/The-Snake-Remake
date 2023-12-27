@@ -1,4 +1,6 @@
-﻿namespace TheSnakeRemake
+﻿using TheSnakeRemake.GameSettings;
+
+namespace TheSnakeRemake
 {
     internal class Program
     {

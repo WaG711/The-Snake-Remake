@@ -1,4 +1,6 @@
-﻿namespace TheSnakeRemake
+﻿using TheSnakeRemake.Model;
+
+namespace TheSnakeRemake.UIModel
 {
     public class FoodSpawn : IFoodSpawn
     {

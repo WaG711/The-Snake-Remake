@@ -1,4 +1,6 @@
-﻿namespace TheSnakeRemake
+﻿using TheSnakeRemake.Model;
+
+namespace TheSnakeRemake.UI
 {
     public class ConsoleGUI : IConsoleGUI
     {
@@ -60,6 +62,7 @@
             Console.WriteLine($"Score - {Score}");
 
             Task.Run(() => Console.Beep(200, 600));
+            Console.ResetColor();
         }
 
         public void DrawBorder()

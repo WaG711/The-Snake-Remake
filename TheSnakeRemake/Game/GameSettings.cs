@@ -1,4 +1,4 @@
-﻿namespace TheSnakeRemake
+﻿namespace TheSnakeRemake.GameSettings
 {
     public class GameSettings : IGameSettings
     {
@@ -8,7 +8,7 @@
             MapHeight = 20;
         }
 
-        public int MapWidth {  get; private set; }
+        public int MapWidth { get; private set; }
         public int MapHeight { get; private set; }
         public int Speed { get; private set; }
         public bool Mode { get; private set; }

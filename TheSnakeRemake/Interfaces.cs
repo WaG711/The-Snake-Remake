@@ -1,4 +1,7 @@
-﻿namespace TheSnakeRemake
+﻿using TheSnakeRemake.Model;
+using TheSnakeRemake.UIModel;
+
+namespace TheSnakeRemake
 {
     public interface IPixel
     {
@@ -12,10 +15,11 @@
     {
         public Pixel Head { get; set; }
         public Queue<Pixel> Body { get; }
+        public ConsoleColor HeadColor { get; }
+        public ConsoleColor BodyColor { get; }
         void PerformMovement(Direction direction, bool isEat = false);
         void Draw();
         void Clear();
-        void Reset(int initialX, int initialY, ConsoleColor headColor, ConsoleColor bodyColor);
     }
 
     public interface ISnakeMove

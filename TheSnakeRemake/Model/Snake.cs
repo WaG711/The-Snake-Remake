@@ -1,4 +1,6 @@
-﻿namespace TheSnakeRemake
+﻿using TheSnakeRemake.UIModel;
+
+namespace TheSnakeRemake.Model
 {
     public class Snake : ISnake
     {
@@ -24,21 +26,6 @@
         public Queue<Pixel> Body { get; } = new Queue<Pixel>();
         public ConsoleColor HeadColor { get; private set; }
         public ConsoleColor BodyColor { get; private set; }
-
-        public void Reset(int initialX, int initialY, ConsoleColor headColor, ConsoleColor bodyColor)
-        {
-            HeadColor = headColor;
-            BodyColor = bodyColor;
-
-            Head = new Pixel(initialX, initialY, HeadColor);
-            Body.Clear();
-
-            for (int i = 1; i < 2; i++)
-            {
-                int bodySegmentX = Head.X - i;
-                Body.Enqueue(new Pixel(bodySegmentX, initialY, BodyColor));
-            }
-        }
 
         public void Clear()
         {

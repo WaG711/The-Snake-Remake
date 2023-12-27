@@ -1,4 +1,4 @@
-﻿namespace TheSnakeRemake
+﻿namespace TheSnakeRemake.Model
 {
     public readonly struct Pixel : IPixel
     {
@@ -26,6 +26,7 @@
             Console.ForegroundColor = _color;
             Console.SetCursorPosition(X, Y);
             Console.Write(_pixelChar);
+            Console.ResetColor();
         }
     }
 }
